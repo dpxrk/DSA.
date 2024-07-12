@@ -1,5 +1,3 @@
-package SinglyLinkedList;
-
 public class SinglyLinkedList {
     private Node head;
 
