@@ -1,0 +1,77 @@
+BSTInsert(tree, node) {
+   if (tree⇢root is null)
+      tree⇢root = node
+   else
+      BSTInsertRecursive(tree⇢root, node)
+}
+
+BSTInsertRecursive(parent, nodeToInsert) {
+   if (nodeToInsert⇢key < parent⇢key) {
+      if (parent⇢left is null)
+         parent⇢left = nodeToInsert
+      else
+         BSTInsertRecursive(parent⇢left, nodeToInsert)
+   }
+   else {
+      if (parent⇢right is null)
+         parent⇢right = nodeToInsert
+      else
+         BSTInsertRecursive(parent⇢right, nodeToInsert)
+   }
+}
+
+BSTRemove(tree, key) {
+   node = BSTSearch(tree, key)
+   parent = BSTGetParent(tree, node)
+   BSTRemoveNode(tree, parent, node)
+}
+
+BSTRemoveNode(tree, parent, node) {
+   if (node == null)
+      return false
+        
+   // Case 1: Internal node with 2 children
+   if (node⇢left != null && node⇢right != null) {
+      // Find successor and successor's parent
+      succNode = node⇢right
+      successorParent = node
+      while (succNode⇢left != null) {
+         successorParent = succNode
+         succNode = succNode⇢left
+      }
+            
+      // Copy the value from the successor node
+      node = Copy succNode
+            
+      // Recursively remove successor
+      BSTRemoveNode(tree, successorParent, succNode)
+   }
+
+   // Case 2: Root node (with 1 or 0 children)
+   else if (node == tree⇢root) {
+      if (node⇢left != null)
+         tree⇢root = node⇢left
+      else
+         tree⇢root = node⇢right
+   }
+
+   // Case 3: Internal with left child only
+   else if (node⇢left != null) {
+      // Replace node with node's left child
+      if (parent⇢left == node)
+         parent⇢left = node⇢left
+      else
+         parent⇢right = node⇢left
+   }
+
+   // Case 4: Internal with right child only OR leaf
+   else {
+      // Replace node with node's right child
+      if (parent⇢left == node)
+         parent⇢left = node⇢right
+      else
+         parent⇢right = node⇢right
+   }        
+
+   return true
+}

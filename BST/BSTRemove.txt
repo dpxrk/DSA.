@@ -1,0 +1,72 @@
+//pseudo code
+
+BSTRemove(tree, key) {
+   par = null
+   cur = tree⇢root
+   while (cur is not null) { // Search for node
+      if (cur⇢key == key) { // Node found 
+         if (cur⇢left is null && cur⇢right is null) { // Remove leaf
+            if (par is null) // Node is root
+               tree⇢root = null
+            else if (par⇢left == cur) 
+               par⇢left = null
+            else
+               par⇢right = null
+         }
+         else if (cur⇢right is null) {                // Remove node with only left child
+            if (par is null) // Node is root
+               tree⇢root = cur⇢left
+            else if (par⇢left == cur) 
+               par⇢left = cur⇢left
+            else
+               par⇢right = cur⇢left
+         }
+         else if (cur⇢left is null) {                // Remove node with only right child
+            if (par is null) // Node is root
+               tree⇢root = cur⇢right
+            else if (par⇢left == cur) 
+               par⇢left = cur⇢right
+            else
+               par⇢right = cur⇢right
+         }
+         else {                                      // Remove node with two children
+            // Find successor (leftmost child of right subtree)
+            suc = cur⇢right
+            while (suc⇢left is not null)
+               suc = suc⇢left
+            successorData = Create copy of suc's data
+            BSTRemove(tree, suc⇢key)     // Remove successor
+            Assign cur's data with successorData
+         }
+         return // Node found and removed
+      }
+      else if (cur⇢key < key) { // Search right
+         par = cur
+         cur = cur⇢right
+      }
+      else {                     // Search left
+         par = cur
+         cur = cur⇢left
+      }
+   }
+   return // Node not found
+}
+
+
+The BST remove algorithm traverses the tree from the root to find the node to remove. 
+When the node being removed has two children, the node's successor is found and a recursive call is made.
+ One node is visited per level, and in the worst case scenario the tree is traversed twice from the root to a leaf. 
+ A BST with 
+ nodes has at least 
+ levels and at most 
+ levels. So removal's worst case time complexity is 
+ for a BST with 
+ levels and worst case 
+ for a tree with 
+ levels.
+
+Two pointers are used to traverse the tree during removal. 
+When the node being removed has two children, a third pointer and
+a copy of one node's data are also used, and one recursive call is made. 
+So removal's space complexity is always 
+.

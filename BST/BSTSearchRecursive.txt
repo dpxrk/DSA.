@@ -1,0 +1,15 @@
+BSTSearch(tree, key) {
+   return BSTSearchRecursive(tree⇢root, key)
+}
+
+BSTSearchRecursive(node, key) {
+   if (node is not null) {
+      if (key == node⇢key)
+         return node
+      else if (key < node⇢key)
+         return BSTSearchRecursive(node⇢left, key)
+      else
+         return BSTSearchRecursive(node⇢right, key)
+   }
+   return null
+}
